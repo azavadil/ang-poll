@@ -1,3 +1,5 @@
+/* global app:true */
+
 'use strict';
 
 /**
@@ -8,7 +10,14 @@
  *
  * Main module of the application.
  */
-angular
+
+/* Popular shorthand to use instead of writing out 
+   angular.module('angFireApp').controller()
+   This allows us to create new controllers with
+   just app.controller()
+*/
+
+ var app = angular
   .module('angFireApp', [
     'ngAnimate',
     'ngCookies',
