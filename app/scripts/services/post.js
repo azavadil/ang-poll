@@ -14,24 +14,27 @@
 
   Firebase stores all data in objects and specifying posts.json tells 
   Firebase to store all of our posts in an object called posts
-*/
-app.factory('Post', function($resource){
-  function($firebase, FIREBASE_URL){
-    var ref = new Firebase(FIREBASE_URL + 'posts');
-    var posts = $firebase(ref);
 
-    var Post = {
-      all: posts,
-      create: function(post){
-        return posts.$add(post);
-      },
-      find: function(postId){
-        return posts.$child(postId);
-      }
-      delete: function(postId){
-        return posts.$remove(postId);
-      }
-    };
-    return Post;
-  }
-})
+
+*/
+app.factory('Post', function($firebase, FIREBASE_URL){
+  
+  // Indicates that there's a root object called 'posts' on our
+  // server that we want to open a connection to
+  var ref = new Firebase(FIREBASE_URL + 'posts');
+  var posts = $firebase(ref);
+
+  var Post = {
+    all: posts,
+    create: function(post){
+      return posts.$add(post);
+    },
+    find: function(postId){
+      return posts.$child(postId);
+    },
+    delete: function(postId){
+      return posts.$remove(postId);
+    }
+  };
+  return Post;
+});
