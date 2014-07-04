@@ -21,6 +21,7 @@ app.factory('Post', function($firebase, FIREBASE_URL){
   
   // Indicates that there's a root object called 'posts' on our
   // server that we want to open a connection to
+  // TODO do we need to use posts/:id.json
   var ref = new Firebase(FIREBASE_URL + 'posts');
   var posts = $firebase(ref);
 
