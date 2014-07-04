@@ -1,0 +1,14 @@
+<form ng-submit="submitPost()">
+  <input type="text" ng-model="post.title" />
+  <input type="text" ng-model="post.url" />
+  <input type="submit" value="Add Post" />
+</form>
+<!-- Note that we have the variable post in our ng-repeat and
+     we have the variable post in our controller but the don't
+     clash. Angular creates a new scope for each ng-repeat block
+-->
+
+<div ng-repeat="(postId, post) in posts">
+  <a href="{{ post.url }}">{{ post.title }}</a>
+  <a ng-click="deletePost(postId)">delete</a>
+</div>
