@@ -49,3 +49,8 @@ app.factory('Auth',
 
     return Auth;
   });
+
+/*
+  Note 1: We'll create a method to create a user which we'll call in the
+          success callback of Auth.register
+*/
