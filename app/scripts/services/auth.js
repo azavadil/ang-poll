@@ -28,6 +28,8 @@ app.factory('Auth',
     var Auth = {
       // $firebaseSimpleLogin service provides $createUser
       // $createUser takes an email and a password
+      // pass on the promise returned by auth.$createUser
+      // the value of which is auth.user
       register: function(user){
         return auth.$createUser(user.email, user.password);
       },

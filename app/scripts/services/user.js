@@ -10,15 +10,11 @@
 
 app.factory('User', function($firebase, FIREBASE_URL, Auth, $rootScope){
   var ref = new Firebase(FIREBASE_URL + 'users');
-  
-  var setCurrentUser = function(username){
-    $rootScope.currentUser = User.findByUsername(username);
-  };
 
   // ensure we call setCurrentUser for logins and refreshed
   // Note 2
   $rootScope.$on('$firebaseSimpleLogin:login', function(e,authUser){
-    var query = $firebase(res.startAt(authUser.uid).endAt(authUser.uid));
+    var query = $firebase(ref.startAt(authUser.uid).endAt(authUser.uid));
 
     query.$on('loaded', function(){
       setCurrentUser(query.$getIndex()[0]);
@@ -29,9 +25,13 @@ app.factory('User', function($firebase, FIREBASE_URL, Auth, $rootScope){
     delete $rootScope.currentUser;
   });
 
+  function setCurrentUser(username){
+    $rootScope.currentUser = User.findByUsername(username);
+  }
+
   var users = $firebase(ref);
-  // called in controllers/auth.js.register()
-  // We'll receive a promise of auth.user
+  // called the success branch of controllers/auth.js.register()
+  // We'll  a promise of auth.user
   var User = {
     create: function(authUser, username){
       users[username] = {
@@ -52,13 +52,10 @@ app.factory('User', function($firebase, FIREBASE_URL, Auth, $rootScope){
       return $rootScope.currentUser;
     },
     signedIn: function(){
-      return $rootScope.currentuser !== undefined;
+      return $rootScope.currentUser !== undefined;
     }
   };
-
-
-
-
+  
 
   return User;
 })
