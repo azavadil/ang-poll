@@ -8,26 +8,15 @@
 */
 
 
-app.controller('PostsCtrl', function($scope,Post){
+app.controller('PostsCtrl', function($scope, Post){
   // Post.get returns an array
-  $scope.posts = Post.get();
-  $scope.post = {url: 'http://', title:''};
+  $scope.posts = Post.all;
+  $scope.post = {url: 'http://', 'title':''};
 
-  $scope.submitPost = function(){
-    // format of success callback param from firebase: {name: postId}
-    Post.save($scope.post, function(ref){
-      // setting the array slot at the firebase uid to be post
-      $scope.posts[ref.name] = $scope.post;
-      $scope.post = {url:'http://', title:''};
-    });
-    $scope.post = {url: 'http://', title:''};
-  };
-  // note2
   $scope.deletePost = function(postId){
-    Post.delete({id: postId}, function(){
-      delete $scope.posts[postId];
-    });
+    Post.delete(postId);
   };
+
 });
 
 
@@ -40,4 +29,8 @@ app.controller('PostsCtrl', function($scope,Post){
 
   Note 2: In order to delete a post we send a DELETE request with out
           postId at the end.
+
+  Note 3: firebase methods return a promise which we can chain with
+          .then() and pass a function that will get called once the 
+          operation completes
 */

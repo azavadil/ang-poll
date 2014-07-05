@@ -1,5 +1,47 @@
-<div>
-  <a href={{ post.url }}>{{ post.title }}</a>
+<div class="container posts-page">
+  <div class="post row">
+    <div class="col-xs-1">
+      <div class="vote up"><span ng-if="downvoted(post)" 
+        ng-click="upVotePost(postId, upVoted(post))">&#x25B2;</span></div>
+      <div class="vote down"><span ng-if="upVoted(post)" 
+        ng-click="downVotePost(postId, downVoted(post))">&#x25BC;</span></div>
+    </div>
+    <div class="col-md-9 col-xs-11">
+      <div class="info">
+        <a href="{{ post.url }}">
+          {{ post.title }}
+          <span class="url">({{ post.url | hostnameFromUrl }})</span>
+        </a>
+      </div>
+      <div>
+        <span>submitted by <a href="#/users/{{ post.owner }}">{{ post.owner }}</a></span>
+      </div>
+    </div>
+    <div class="col-md-2">
+  </div>
 </div>
 
-<a href="#/posts">Back to Posts</a>
+    <div ng-repeat="(commentId, comment) in post.comments" class="row cmt">
+      <div class="col-md-12">
+        <p>{{ comment.text }}</p>
+        <p class="author">posted by <a href="#/users/{{comment.username}}">
+         {{ comment.username }}</a></p>
+        <a ng-click="removeComment(comment, commentId)" ng-if="signedIn() &&
+          comment.username === currentUser.username">(delete)</a></p>
+      </div>
+    </div>
+
+    <div class="cmt-form">
+      <div ng-if="!signedIn()">
+        <p><a href="#/login">Sign in</a> to post a comment</p>
+      </div>
+
+      <form ng-if="signedIn()">
+      <!-- inside an ng-if angular creates a new scope --> 
+        <textarea ng-model="$parent.comment.text" placeholder="Post a Comment" 
+          class="form-control"></textarea><br/>
+        <input type="submit" ng-click="addComment()" value="Post Comment"
+          class="btn btn-primary" />
+      </form>
+    </div>
+  </div>

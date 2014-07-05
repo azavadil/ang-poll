@@ -64,6 +64,7 @@ app.factory('Post', function($firebase, FIREBASE_URL, User){
     },
     // add
     addComment: function(postId, comment){
+      console.log('addComment', comment);
       if(User.signedIn()){
         var user = User.getCurrent();
 
@@ -76,11 +77,28 @@ app.factory('Post', function($firebase, FIREBASE_URL, User){
           user.$child('comments').$child(ref.name()).$set({id:ref.name(), postId:postId});
         });
       }
-    } //end addComment
+    }, //end addComment
+
+    /**
+     * 
+     * @param {firebase comment object}
+     * @param {comment object} - so we can see who posted the comment
+     * @param {commentId} - not included on comment, needed for deleting
+     */
+    deleteComment: function(post, comment, commentId){
+      if(User.signedIn()){
+        var user = User.findByUsername(comment.username);
+        // Note 2
+        post.$child('comments').$remove(commentId).then(function(){
+          user.$child('comments').$remove(commentId);
+        });
+      }
+    } // end of deleteComment
   }
   return Post;
 });
 
 /* Note 1: saves a reference to the comment on the user
-
+  
+   Note 2: post.$child, we need the post as a firebase object
 */
