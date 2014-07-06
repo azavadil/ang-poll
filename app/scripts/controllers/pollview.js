@@ -22,12 +22,10 @@ app.controller('PollViewCtrl', function($scope, $routeParams, Poll){
   };
 
   $scope.addLike = function(){
-    console.log('pollview liked');
     Poll.addLike($routeParams.pollId, 'like');
   };
 
   $scope.addDislike = function(){
-    console.log('pollview dislike');
     Poll.addLike($routeParams.pollId, 'dislike');
   };
 

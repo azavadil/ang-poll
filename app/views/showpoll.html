@@ -14,9 +14,10 @@
         <span>submitted by <a href="#/users/{{ poll.owner }}">{{ poll.owner }}</a></span>
       </div>
       <!-- graph goes here -->
+      <h3>Hot: {{ poll.like - poll.dislike }}</h3> 
 
-      <button ng-click="submit" class="btn btn-primary">Hot</button>
-      <button ng-click="class="btn btn-danger">Not</button>
+      <button ng-click="addLike()" class="btn btn-lg btn-primary">Hot</button>
+      <button ng-click="addDislike()" class="btn btn-lg btn-danger">Not</button>
 
 
 
