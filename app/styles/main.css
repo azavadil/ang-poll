@@ -13,8 +13,8 @@ body {
 }
 
 
-/* MAIN POSTS PAGE */
-.post {
+/* MAIN POLLS PAGE */
+.poll {
   background: #fff;
   padding:15px 0;
   -moz-box-shadow: 0 0 5px rgba(0,0,0,0.2);

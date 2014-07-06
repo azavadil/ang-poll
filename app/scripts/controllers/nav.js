@@ -1,13 +1,14 @@
 'use strict';
 
-app.controller('NavCtrl', function($scope, $location, Post, Auth){
-  $scope.post = {url: 'http://', title: ''};
+app.controller('NavCtrl', function($scope, $location, Poll, Auth){
+  $scope.poll = {title: ''};
 
-  $scope.submitPost = function(){
-    // postId comes from post factory
-    Post.create($scope.post).then(function(postId){
-      $scope.post = {url: 'http://', title: ''};
-      $location.path('/posts/' + postId);
+  $scope.submitPoll = function(){
+    console.log('submit triggered');
+    // pollId comes from poll factory
+    Poll.create($scope.poll).then(function(pollId){
+      $scope.poll = {title: ''};
+      $location.path('/polls/' + pollId);
     });
   };
 

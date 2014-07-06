@@ -33,16 +33,12 @@
 app.config(function ($routeProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: 'views/posts.html',
-        controller: 'PostsCtrl'
+        templateUrl: 'views/polls.html',
+        controller: 'PollsCtrl'
       })
-      .when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl'
-      })
-      .when('/posts/:postId',{
-        templateUrl: 'views/showpost.html',
-        controller: 'PostViewCtrl'
+      .when('/polls/:pollId',{
+        templateUrl: 'views/showpoll.html',
+        controller: 'PollViewCtrl'
       })
       .when('/register',{
         templateUrl: 'views/register.html',

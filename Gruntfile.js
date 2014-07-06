@@ -196,7 +196,7 @@ module.exports = function (grunt) {
               js: ['concat', 'uglifyjs'],
               css: ['cssmin']
             },
-            post: {}
+            poll: {}
           }
         }
       }

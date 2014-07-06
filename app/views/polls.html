@@ -1,0 +1,21 @@
+<div clas="container polls-page">
+
+  <div class="poll row" ng-repeat="(pollId, poll) in polls">
+    <div class="col-xs-1">
+
+    </div>
+    <div class="col-md-9 col-xs-11">
+
+      <div class="info">
+        <a href="#/polls/{{ pollId }}"> {{ poll.title }} </a>
+      </div>
+      <div>
+      <span>submitted by <a href="#/users/{{ poll.owner }}">{{ poll.owner}}</a></span>
+        <a href="#/polls/{{ pollId }}">comments</a>
+        <a ng-click="deletePoll(pollId)" ng-if="signedIn() && poll.owner === currentUser.username">delete</a>
+      </div>
+    </div>
+    <div class="col-md-2">
+    </div>
+  </div>
+</div>
