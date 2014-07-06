@@ -22,6 +22,9 @@ app.factory('Poll', function($firebase, FIREBASE_URL, User){
   // Indicates that there's a root object called 'polls' on our
   // server that we want to open a connection to
   // TODO do we need to use polls/:id.json
+  // The URL used to create the Firebase reference follows the JSON structure
+  // of the data stored in Firebase
+
   var ref = new Firebase(FIREBASE_URL + 'polls');
   var polls = $firebase(ref);
 
@@ -62,6 +65,26 @@ app.factory('Poll', function($firebase, FIREBASE_URL, User){
         });
       }
     },
+    // type is either 'like' or 'dislike'
+    addLike: function(pollId, type){
+      // TODO: Vote without signin?
+      if(User.signedIn()){
+
+        polls.$child(pollId).$child(type).$transaction(function(currentCount) {
+          if(!currentCount) return 1; //Initial value for counter
+            return currentCount +1;
+          }).then(function(snapshot){
+            if(!snapshot){
+              // Handle aborted transaction
+            } else {
+              /// do something
+            }
+          }, function(err){
+            // Handle the error condition
+          });
+      }
+    },
+
     // add
     addComment: function(pollId, comment){
       console.log('addComment', comment);
@@ -71,10 +94,11 @@ app.factory('Poll', function($firebase, FIREBASE_URL, User){
         comment.username = user.username;
         comment.pollId = pollId;
         // adding comment to the comments object on poll
-        polls.$child(pollId).$child('comments').$add(comment).then(function(ref){
-          // create an object on the user to store comments so we can later see
-          // all the comments the user created. Note 1
-          user.$child('comments').$child(ref.name()).$set({id:ref.name(), pollId:pollId});
+        polls.$child(pollId).$child('comments').$add(comment)
+          .then(function(ref){
+            // create an object on the user to store comments so we can later see
+            // all the comments the user created. Note 1
+            user.$child('comments').$child(ref.name()).$set({id:ref.name(), pollId:pollId});
         });
       }
     }, //end addComment

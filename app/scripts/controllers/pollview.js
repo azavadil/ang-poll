@@ -12,7 +12,6 @@ app.controller('PollViewCtrl', function($scope, $routeParams, Poll){
 
   // Note 1
   $scope.addComment = function(){
-    console.log('pollview', $scope.comment.text);
     Poll.addComment($routeParams.pollId, $scope.comment);
     $scope.comment = '';
   };
@@ -21,5 +20,16 @@ app.controller('PollViewCtrl', function($scope, $routeParams, Poll){
   $scope.removeComment = function(comment, commentId){
     Poll.deleteComment($scope.poll, comment, commentId);
   };
+
+  $scope.addLike = function(){
+    console.log('pollview liked');
+    Poll.addLike($routeParams.pollId, 'like');
+  };
+
+  $scope.addDislike = function(){
+    console.log('pollview dislike');
+    Poll.addLike($routeParams.pollId, 'dislike');
+  };
+
 })
 
