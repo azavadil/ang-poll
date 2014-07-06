@@ -28,6 +28,7 @@ app.factory('Poll', function($firebase, FIREBASE_URL, User){
   var ref = new Firebase(FIREBASE_URL + 'polls');
   var polls = $firebase(ref);
 
+
   var Poll = {
     all: polls,
     create: function(poll){
@@ -39,6 +40,7 @@ app.factory('Poll', function($firebase, FIREBASE_URL, User){
         // resolve poll.$add so we can add an assocition to our user object
         return polls.$add(poll).then(function(ref){
           var pollId = ref.name();
+
           // set {pollId:pollId} on an object polls on our user
           // keep these references by pollId so we can easily delete them
           user.$child('polls').$child(pollId).$set(pollId); 
@@ -77,13 +79,25 @@ app.factory('Poll', function($firebase, FIREBASE_URL, User){
             if(!snapshot){
               // Handle aborted transaction
             } else {
-              /// do something
+              // TODO: trendline
+              var thisVoteTotal = snapshot.val();
+              var otherType = type === 'like' ? 'dislike' : 'like';
+              var thatVoteTotal = polls.$child(pollId)[otherType];
+              var voteTotal = type === 'like' ? 
+                thisVoteTotal - thatVoteTotal :
+                thatVoteTotal - thisVoteTotal; 
+              polls.$child(pollId).$child('trendline').$add({
+                time: Date.now(),
+                voteTotal: voteTotal
+              });
             }
           }, function(err){
             // Handle the error condition
           });
       }
     },
+
+
 
     // add
     addComment: function(pollId, comment){
