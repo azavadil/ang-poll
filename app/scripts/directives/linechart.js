@@ -157,8 +157,9 @@ app.directive('lineChart', function(){
           };
           results.push(cur);
         }
-
+        
         drawChart(results);
+        
       });
 
     }; // end of link function

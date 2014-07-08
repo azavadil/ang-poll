@@ -63,17 +63,17 @@ app.directive('frontChart', function(){
         .append("svg")  //attach an svg to the body
           .attr("width", width + margin)
           .attr("height", height + margin)
-          .attr("class", "trendline")
+          .attr("class", scope.data.title)
         .append("g")
           .attr("class", "chart");
 
 
-      d3.select("svg.trendline")
+      d3.select("svg." + scope.data.title)
         .selectAll("circle") // empty selection
         .data(data)    // TODO join with data creating enter selection
         .enter()                          // get enter selection
         .append("circle")                 // append enter selection as circles
-          .attr("class", "trendline");  
+          .attr("class", scope.data.title);  
 
 
       var vote_extent = d3.extent(
@@ -106,9 +106,9 @@ app.directive('frontChart', function(){
       var time_axis = d3.svg.axis()
         .scale(time_scale);
 
-      d3.select("svg.trendline")
+      d3.select("svg." + scope.data.title)
         .append("g")
-        .attr("class", "x axis trendline")
+        .attr("class", "x axis " + scope.data.title)
         .attr("transform", "translate(0," + height + ")")
         .call(time_axis);
 
@@ -116,9 +116,9 @@ app.directive('frontChart', function(){
         .scale(vote_scale)
         .orient("left");
 
-      d3.select("svg.trendline")
+      d3.select("svg." + scope.data.title)
         .append("g")
-        .attr("class", "y axis trendline")
+        .attr("class", "y axis " + scope.data.title)
         .attr("transform", "translate(" + margin + ",0)")
         .call(vote_axis);
 
