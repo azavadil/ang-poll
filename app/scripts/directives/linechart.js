@@ -162,6 +162,23 @@ app.directive('lineChart', function(){
         
       });
 
+      scope.data.$on("change", function(){
+        // [{uui:{time: 000, votes: xxxx}}]
+        // TODO: Can object be resolved instead of this extraction
+        var keys = scope.data.trendline ? Object.keys(scope.data.trendline) : []; 
+        var results = [];
+        for(var i = 0; i < keys.length;i++){
+          var cur = {
+            time: scope.data.trendline[keys[i]].time,
+            voteTotal: scope.data.trendline[keys[i]].voteTotal
+          };
+          results.push(cur);
+        }
+        
+        drawChart(results);
+        
+      });
+
     }; // end of link function
 
   return {
