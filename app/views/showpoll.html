@@ -16,13 +16,15 @@
       <!-- graph goes here -->
       <!-- TODO ng-poll may have to go back to ng-model-->
       <h3>Net Hot: {{ poll.like - poll.dislike }}</h3> 
-      
-      <!--
-      <bar-chart data="poll"></bar-chart> 
-      -->
-
-      <line-chart data="poll"></line-chart>
-
+            
+      <div class="row">
+        <div class="col-md-6">
+          <bar-chart data="poll" height="200" width="400"></bar-chart>
+        </div>
+        <div class="col-md-6">
+          <line-chart data="poll" height="200" width="400"></line-chart>
+        </div>
+      </div>
       <button ng-click="addLike()" class="btn btn-lg btn-primary">Hot</button>
       <button ng-click="addDislike()" class="btn btn-lg btn-danger">Not</button>
 

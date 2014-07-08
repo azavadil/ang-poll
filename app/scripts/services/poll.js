@@ -70,7 +70,6 @@ app.factory('Poll', function($firebase, FIREBASE_URL, User){
     // type is either 'like' or 'dislike'
     addLike: function(pollId, type){
       // TODO: Vote without signin?
-      console.log(type);
       if(User.signedIn()){
 
         polls.$child(pollId).$child(type).$transaction(function(currentCount) {
@@ -84,7 +83,6 @@ app.factory('Poll', function($firebase, FIREBASE_URL, User){
               var thisVoteTotal = snapshot.val();
               var otherType = type === 'like' ? 'dislike' : 'like';
               var thatVoteTotal = polls.$child(pollId)[otherType] || 0;
-              console.log('this', thisVoteTotal, 'that', thatVoteTotal);
               var voteTotal = type === 'like' ? 
                 thisVoteTotal - thatVoteTotal :
                 thatVoteTotal - thisVoteTotal; 

@@ -42,20 +42,23 @@ var viewData = function(data, t, v){
 
 app.directive('lineChart', function(){
     function link(scope, el, attr){
+
+
       var margin = 40;
-      var width = 700 - margin;
-      var height = 300 - margin;
+      var width = scope.width - margin;
+      var height = scope.height - margin;
 
       d3.select(el[0])
         .append("svg")  //attach an svg to the body
           .attr("width", width + margin)
-          .attr("width", height + margin)
+          .attr("height", height + margin)
+          .attr("class", "trendline")
         .append("g")
           .attr("class", "chart");
 
       var drawChart = function(data){
 
-        d3.select("svg")
+        d3.select("svg.trendline")
           .selectAll("circle") // empty selection
           .data(data)    // TODO join with data creating enter selection
           .enter()                          // get enter selection
@@ -66,11 +69,9 @@ app.directive('lineChart', function(){
         var vote_extent = d3.extent(
           data, //TODO
           function(d){ 
-            console.log('extent', d);
             return d.voteTotal; }
         );
 
-        console.log(vote_extent);
         var vote_scale = d3.scale.linear()
           .domain(vote_extent)
           .range([height, margin]);
@@ -89,12 +90,13 @@ app.directive('lineChart', function(){
         d3.selectAll("circle")
           .attr("cy", function(d){ return vote_scale(d.voteTotal); })
           .attr("cx", function(d){ return time_scale(d.time); })
-          .attr("r", 3);
+          .attr("r", 5)
+          .attr("class", "trend-circle");
 
         var time_axis = d3.svg.axis()
           .scale(time_scale)
 
-        d3.select("svg")
+        d3.select("svg.trendline")
           .append("g")
           .attr("class", "x axis")
           .attr("transform", "translate(0," + height + ")")
@@ -145,17 +147,16 @@ app.directive('lineChart', function(){
 
       scope.data.$on("loaded", function(){
         // [{uui:{time: 000, votes: xxxx}}]
-        var keys = Object.keys(scope.data.trendline); 
+        console.log('width', scope.width, scope.height);
+        var keys = scope.data.trendline ? Object.keys(scope.data.trendline) : []; 
         var results = [];
         for(var i = 0; i < keys.length;i++){
-          console.log(scope.data.trendline[keys[i]]);
           var cur = {
             time: scope.data.trendline[keys[i]].time,
             voteTotal: scope.data.trendline[keys[i]].voteTotal
           };
           results.push(cur);
         }
-        console.log(results);
 
         drawChart(results);
       });
@@ -166,7 +167,9 @@ app.directive('lineChart', function(){
     link: link,
     restrict: 'E',
     scope: {
-      data: '='
+      data: '=',
+      width: '@width',
+      height: '@height'
     }
   };
 });

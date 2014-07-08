@@ -9,6 +9,7 @@
 
 app.controller('PollViewCtrl', function($scope, $routeParams, Poll){
   $scope.poll = Poll.find($routeParams.pollId);
+  $scope.width = 100;
 
   // Note 1
   $scope.addComment = function(){

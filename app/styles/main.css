@@ -114,3 +114,8 @@ body {
   stroke: #000;
   shape-rendering: crispEdges;
 }
+
+.trend-circle{
+  opacity: 0.3;
+  fill: #1B9677;
+}
