@@ -116,6 +116,11 @@ body {
 }
 
 .trend-circle{
-  opacity: 0.3;
+  opacity: 0.5;
   fill: #1B9677;
+}
+
+#brandLogo {
+  height: 50px;
+  width: 50px;
 }
