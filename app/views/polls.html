@@ -10,6 +10,9 @@
         <a href="#/polls/{{ pollId }}"> {{ poll.title }} </a>
       </div>
       <div>
+        <front-chart data="poll" height="150" width="300"></front-chart>
+      </div>
+      <div>
       <span>submitted by <a href="#/users/{{ poll.owner }}">{{ poll.owner}}</a></span>
         <a href="#/polls/{{ pollId }}">comments</a>
         <a ng-click="deletePoll(pollId)" ng-if="signedIn() && poll.owner === currentUser.username">delete</a>
