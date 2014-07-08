@@ -96,8 +96,12 @@ body {
   text-anchor: middle;
 }
 
-.thermometer {
+.likeBar {
   fill: #1B9677;
+}
+
+.dislikeBar {
+  fill: #00FF00;
 }
 
 .axis text {

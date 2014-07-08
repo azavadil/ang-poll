@@ -1,4 +1,4 @@
-app.directive('lineChart', function(){
+app.directive('barChart', function(){
 
   function link(scope, el, attr){
 
@@ -39,48 +39,58 @@ app.directive('lineChart', function(){
         .style("text-anchor", "end")
         .text("% Hot");
 
+    
+
     function updateLikeBar(updateData){
-      var bar = svg.selectAll("g")
+      var canvas = svg.selectAll("g")
         .data(updateData);
 
       // [100, 0] maps to [0,1]
-      bar.append("rect")
+      canvas.append("rect")
         .attr("y", function(d){ console.log(d)
             var topOfBar = y(d.votes/d.voteTotal);
             return y(d.votes/d.voteTotal); })
         .attr("height", function(d){ return y(1-d.votes/d.voteTotal); })
         .attr("width", barWidth)
-        .attr("class", "thermometer");
+        .attr("class", "likeBar");
     };
 
     function updateDislikeBar(updateData){
-      var bar = svg.selectAll("g")
+      var canvas = svg.selectAll("g")
         .data(updateData);
 
       // [100, 0] maps to [0,1]
-      bar.append("rect")
+      canvas.append("rect")
+        .attr("x", barWidth)
         .attr("y", function(d){ console.log(d)
-            var topOfBar = y(d.votes/d.voteTotal);
-            return y(d.votes/d.voteTotal); })
+            return height/2; })
         .attr("height", function(d){ return y(1-d.votes/d.voteTotal); })
         .attr("width", barWidth)
-        .attr("class", "thermometer");
+        .attr("class", "dislikeBar");
     };
 
     scope.data.$on('loaded', function(){
-      var updateData = [{votes: scope.data.like, 
+      var likeData = [{votes: scope.data.like, 
                         voteTotal: scope.data.like + scope.data.dislike}];
-      console.log('updateDate', updateData[0]);
-      updateLikeBar(updateData);
+
+      var dislikeData = [{votes: scope.data.dislike, 
+                        voteTotal: scope.data.like + scope.data.dislike}];
+
+      updateLikeBar(likeData);
+      updateDislikeBar(dislikeData);
 
     });
        
 
     scope.data.$on('change', function(){
-      var updateData = [{votes: scope.data.like, 
+      var likeData = [{votes: scope.data.like, 
                         voteTotal: scope.data.like + scope.data.dislike}];
-      console.log('updateDate', updateData[0]);
-      updateLikeBar(updateData);
+
+      var dislikeData = [{votes: scope.data.dislike, 
+                        voteTotal: scope.data.like + scope.data.dislike}];
+
+      updateLikeBar(likeData);
+      updateDislikeBar(dislikeData)
 
     });
 
