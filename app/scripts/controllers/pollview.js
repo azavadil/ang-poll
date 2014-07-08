@@ -29,5 +29,9 @@ app.controller('PollViewCtrl', function($scope, $routeParams, Poll){
     Poll.addLike($routeParams.pollId, 'dislike');
   };
 
+  $scope.getPoll = function(){
+    Poll.getTrendline($scope.poll)
+  }
+
 })
 

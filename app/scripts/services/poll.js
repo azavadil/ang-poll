@@ -131,7 +131,12 @@ app.factory('Poll', function($firebase, FIREBASE_URL, User){
           user.$child('comments').$remove(commentId);
         });
       }
-    } // end of deleteComment
+    }, // end of deleteComment
+
+    getTrendline: function(poll){
+      // 
+
+    }
   }
   return Poll;
 });

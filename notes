@@ -1,0 +1,18 @@
+Directives are essentially a way for us to create our 
+HTML elements that act like built in elements
+
+Directives:
+  we can use angular directives
+  e.g. use ng-switch to show different vizs
+
+  <div ng-switch on="selection">
+    <div ng-switch-when="pie">
+      <pie-chart></pie-chart>
+    </div>
+    <div ng-switch-default>
+      <bar-chart></bar-chart>
+    </div>
+
+<div ng-repeat="races in incomes">
+  <map ng-repeat="race in races"></map>
+</div>

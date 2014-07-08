@@ -8,14 +8,17 @@
     </div>
     <div class="col-md-9 col-xs-11">
       <div class="info">
-        <a href="{{ poll.url }}"> {{ poll.title }} </a>
+        <h3>{{ poll.title }} </h3>
       </div>
       <div>
         <span>submitted by <a href="#/users/{{ poll.owner }}">{{ poll.owner }}</a></span>
       </div>
       <!-- graph goes here -->
-      <div ng-linegraph ng-poll="20"></div>
+      <!-- TODO ng-poll may have to go back to ng-model-->
       <h3>Hot: {{ poll.like - poll.dislike }}</h3> 
+      
+      <line-chart data="poll"></line-chart> 
+      
 
       <button ng-click="addLike()" class="btn btn-lg btn-primary">Hot</button>
       <button ng-click="addDislike()" class="btn btn-lg btn-danger">Not</button>
