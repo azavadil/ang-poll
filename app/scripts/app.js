@@ -26,7 +26,7 @@
     'ngSanitize',
     'ngTouch',
     'firebase'
-  ]).constant('FIREBASE_URL', process.env.MY_FIREBASE || 'https://brilliant-fire-9468.firebaseio.com/')
+  ]).constant('FIREBASE_URL', process.env.MY_FIREBASE)
 
 // when does 2 things; Points to our view's file and injects the controller
 
