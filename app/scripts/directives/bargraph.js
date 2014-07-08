@@ -2,13 +2,13 @@ app.directive('lineChart', function(){
 
   function link(scope, el, attr){
 
-
-    var margin = {top:0, right:20, bottom: 0, left:40};
+    var margin = {top:20, right:20, bottom: 30, left:40};
     var width = 400 - margin.left - margin.right;
     var height = 200 - margin.top - margin.bottom;
 
+    // [100,0] maps to [0,1]
     var y = d3.scale.linear()
-      .range([0, height]);
+      .range([height/2,0]);
 
     var yAxisScale = d3.scale.linear()
       .domain([-1,1])
@@ -26,20 +26,8 @@ app.directive('lineChart', function(){
       .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    var barWidth = 100;
+    var barWidth = 50;
 
-     // var bar = svg.selectAll("g")
-     //      .data([{votes:20, voteTotal: 30}])
-     //    .enter().append("g");
-
-     //  bar.append("rect")
-     //    .attr("y", function(d){ 
-     //        var bottomOfBar = d.votes >= 0 ? 0.5 : 0.5 + 0.5*Math.abs(d.votes/d.voteTotal);
-     //        console.log('bob', bottomOfBar, "y(bob)", y(bottomOfBar), 'height', y(d.votes/d.voteTotal));
-     //        return y(bottomOfBar) + margin.top; })
-     //    .attr("height", function(d){ return y(0.5*Math.abs(d.votes/d.voteTotal)); })
-     //    .attr("width", barWidth)
-     //    .attr("class", "thermometer");
 
     svg.append("g")
         .attr("class", "y axis")
@@ -51,34 +39,48 @@ app.directive('lineChart', function(){
         .style("text-anchor", "end")
         .text("% Hot");
 
-    function updateChart(updateData){
-      console.log('updateChart', updateData);
+    function updateLikeBar(updateData){
       var bar = svg.selectAll("g")
-          .data([{votes:20, voteTotal: 30}])
-        .enter().append("g");
-      console.log(bar);
+        .data(updateData);
 
-      var newBar = bar.append("rect")
-      console.log('newbar', newBar);
-
-      newBar.attr("y", function(d){ console.log(d)
-        return 10;
-        });
-        //     console.log('bob', bottomOfBar, "y(bob)", y(bottomOfBar), 'height', y(d.votes/d.voteTotal));
-        //     var bottomOfBar = d.votes >= 0 ? 0.5 : 0.5 + 0.5*Math.abs(d.votes/d.voteTotal);
-        //     return y(bottomOfBar) + margin.top; })
-        // .attr("height", function(d){ return y(0.5*Math.abs(d.votes/d.voteTotal)); })
-        // .attr("width", barWidth)
-        // .attr("class", "thermometer");
+      // [100, 0] maps to [0,1]
+      bar.append("rect")
+        .attr("y", function(d){ console.log(d)
+            var topOfBar = y(d.votes/d.voteTotal);
+            return y(d.votes/d.voteTotal); })
+        .attr("height", function(d){ return y(1-d.votes/d.voteTotal); })
+        .attr("width", barWidth)
+        .attr("class", "thermometer");
     };
 
-   
+    function updateDislikeBar(updateData){
+      var bar = svg.selectAll("g")
+        .data(updateData);
 
-    scope.data.$on('change', function(){
-      var updateData = [{votes: scope.data.like - scope.data.dislike, 
+      // [100, 0] maps to [0,1]
+      bar.append("rect")
+        .attr("y", function(d){ console.log(d)
+            var topOfBar = y(d.votes/d.voteTotal);
+            return y(d.votes/d.voteTotal); })
+        .attr("height", function(d){ return y(1-d.votes/d.voteTotal); })
+        .attr("width", barWidth)
+        .attr("class", "thermometer");
+    };
+
+    scope.data.$on('loaded', function(){
+      var updateData = [{votes: scope.data.like, 
                         voteTotal: scope.data.like + scope.data.dislike}];
       console.log('updateDate', updateData[0]);
-      updateChart(updateData);
+      updateLikeBar(updateData);
+
+    });
+       
+
+    scope.data.$on('change', function(){
+      var updateData = [{votes: scope.data.like, 
+                        voteTotal: scope.data.like + scope.data.dislike}];
+      console.log('updateDate', updateData[0]);
+      updateLikeBar(updateData);
 
     });
 
