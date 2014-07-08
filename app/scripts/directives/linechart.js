@@ -98,19 +98,19 @@ app.directive('lineChart', function(){
 
         d3.select("svg.trendline")
           .append("g")
-          .attr("class", "x axis")
+          .attr("class", "x axis trendline")
           .attr("transform", "translate(0," + height + ")")
           .call(time_axis);
 
-        var count_axis = d3.svg.axis()
+        var vote_axis = d3.svg.axis()
           .scale(vote_scale)
           .orient("left");
 
-        d3.select("svg")
+        d3.select("svg.trendline")
           .append("g")
-          .attr("class", "y axis")
+          .attr("class", "y axis trendline")
           .attr("transform", "translate(" + margin + ",0)")
-          .call(count_axis);
+          .call(vote_axis);
 
         /** path generator
          * @param{ accessor function } - function to return x value
@@ -130,14 +130,14 @@ app.directive('lineChart', function(){
         //     .attr("d", lineGeneratorFn(data))
         //     .attr("class", "trendline")
 
-        d3.select(".y.axis")
+        d3.select(".y.axis.trendline")
           .append("text")
           .text("net votes (like - dislike)")
           .attr("transform", "rotate (90, " + -margin + ", 0)")
           .attr("x", 20)
           .attr("y", 0);
 
-        d3.select(".x.axis")
+        d3.select(".x.axis.trendline")
           .append("text")
             .text("time")
             .attr("x", function(){return (width/1.6) - margin; })
