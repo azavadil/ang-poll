@@ -115,7 +115,7 @@ body {
   shape-rendering: crispEdges;
 }
 
-.trend-circle{
+circle{
   opacity: 0.3;
   fill: #1B9677;
 }

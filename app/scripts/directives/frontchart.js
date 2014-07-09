@@ -97,11 +97,11 @@ app.directive('frontChart', function(){
 
       //viewData(data, time_scale, vote_scale);
 
-      d3.selectAll("circle")
+      d3.selectAll("circle." + scope.data.title)
         .attr("cy", function(d){ return vote_scale(d.voteTotal); })
         .attr("cx", function(d){ return time_scale(d.time); })
         .attr("r", 5)
-        .attr("class", "trend-circle");
+        .attr("class", scope.data.title);
 
       var time_axis = d3.svg.axis()
         .scale(time_scale);
@@ -140,14 +140,14 @@ app.directive('frontChart', function(){
       //     .attr("d", lineGeneratorFn(data))
       //     .attr("class", "trendline")
 
-      d3.select(".y.axis.trendline")
+      d3.select(".y.axis." + scope.data.title)
         .append("text")
         .text("net votes (like - dislike)")
         .attr("transform", "rotate (90, " + -margin + ", 0)")
         .attr("x", 20)
         .attr("y", 0);
 
-      d3.select(".x.axis.trendline")
+      d3.select(".x.axis." + scope.data.title)
         .append("text")
           .text("time")
           .attr("x", function(){return (width/1.6) - margin; })
