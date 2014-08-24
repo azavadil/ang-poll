@@ -16,6 +16,8 @@ app.controller('PollsCtrl', function($scope, Poll){
     Poll.delete(pollId);
   };
 
+  
+
 });
 
 
