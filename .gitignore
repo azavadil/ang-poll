@@ -4,3 +4,7 @@ dist
 .sass-cache
 bower_components
 firebaseUrl
+deploy_old.sh
+.deployment_old
+
+
