@@ -5,7 +5,7 @@ hackathon. The goal was to demonstrate the real time cababilities of a Firebase
 when combined with AngularJS. 
 
 #### Description
-* Users can sign up for accounts and post polls
+* Users can sign up for accounts and post polls for events (e.g. hackathon project)
 * Users can vote as many times as they want positively or negatively for a particular event
 * Sentiment is displayed in real time with visualizations 
 * Users can comment on polls and comments are displayed in real time
