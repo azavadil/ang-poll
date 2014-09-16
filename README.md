@@ -7,7 +7,8 @@ when combined with AngularJS.
 #### Description
 * Users can sign up for accounts and post polls
 * Users can vote as many times as they want positively or negatively for a particular event
-* The intent was to elicit preferences throught spontaneous voting
+* Sentiment is displayed in real time with visualizations 
+* Users can comment on polls and comments are displayed in real time
 
 #### Data Binding
 * The application demonstrates the data binding capabilities of AngularJS and Firbase
