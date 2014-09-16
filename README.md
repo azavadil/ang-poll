@@ -1,4 +1,4 @@
-## VoteQuik
+## VoteQuik (www.votequik.com)
 
 VoteQuik is a real time voting application. This project was built over the course of a 2 day
 hackathon. The goal was to demonstrate the real time cababilities of a Firebase
